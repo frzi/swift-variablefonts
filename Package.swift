@@ -7,19 +7,19 @@ let package = Package(
 	name: "VariableFonts",
 	platforms: [
 		.macOS(.v11),
-		.iOS(.v12),
+		.iOS(.v13),
 		.tvOS(.v12),
-		.watchOS(.v4)
+		.watchOS(.v4),
+		.macCatalyst(.v13),
+		.visionOS(.v1)
 	],
 	products: [
-		// Products define the executables and libraries a package produces, making them visible to other packages.
 		.library(
 			name: "VariableFonts",
 			targets: ["VariableFonts"]),
 	],
+	dependencies: [],
 	targets: [
-		// Targets are the basic building blocks of a package, defining a module or a test suite.
-		// Targets can depend on other targets in this package and products from dependencies.
 		.target(
 			name: "VariableFonts"),
 		.testTarget(

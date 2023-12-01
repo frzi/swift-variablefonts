@@ -8,7 +8,7 @@ import AppKit
 
 typealias PlatformFont = NSFont
 typealias PlatformFontDescriptor = NSFontDescriptor
-#elseif os(iOS) || os(tvOS) || os(watchOS)
+#elseif os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 import UIKit
 
 typealias PlatformFont = UIFont
@@ -26,14 +26,34 @@ public extension PlatformFont {
 		])
 	}
 
-	/// Initialize a font with the given axes.
+	/// Initialize a font with the given axes using identifiers.
+	///
+	/// This initializer expects a dictionary with axis identifiers (`UInt32`) as key.
+	/// ```swift
+	///	let axes: [UInt32 : CGFloat] = [
+	///		2003072104: 400, // Weight
+	///		2003072104: 200, // Width
+	///	]
+	/// ```
+	convenience init?(name: String, size: CGFloat, axes: [UInt32 : CGFloat]) {
+		let descriptor = Self.descriptorFor(name: name, axes: axes)
+		self.init(descriptor: descriptor, size: size)
+	}
+
+	/// Initialize a font with the given axes using names.
+	///
+	/// This initializer expects a dictionary with axis names (`String`) as key.
+	/// ```swift
+	///	let axes: [String : CGFloat] = [
+	///		"wght": 400, // Weight
+	///		"wdth": 200, // Width
+	///	]
+	/// ```
 	convenience init?(name: String, size: CGFloat, axes: [String : CGFloat]) {
 		let axes = Dictionary(uniqueKeysWithValues: axes.map { key, value in
 			return (nameToId(key), value)
 		})
-
-		let descriptor = Self.descriptorFor(name: name, axes: axes)
-		self.init(descriptor: descriptor, size: size)
+		self.init(name: name, size: size, axes: axes)
 	}
 
 	/// Get all available axes information of the font.
@@ -47,26 +67,30 @@ public extension PlatformFont {
 	}
 
 	// MARK: - Set axis.
-	func withAxis(_ axis: UInt32, value: CGFloat) -> Self {
+	/// Returns a new font with the applied axis, using the identifier as key.
+	func withAxis(_ id: UInt32, value: CGFloat) -> Self {
 		let descriptor = Self.descriptorFor(name: fontName, axes: [
-			axis: value
+			id: value
 		])
 		return Self.init(descriptor: descriptor, size: pointSize)!
 	}
 
-	func withAxis(_ axis: String, value: CGFloat) -> Self {
-		let axis = nameToId(axis)
+	/// Returns a new font with the applied axis, using the name as key.
+	func withAxis(_ name: String, value: CGFloat) -> Self {
+		let id = nameToId(name)
 		let descriptor = Self.descriptorFor(name: fontName, axes: [
-			axis: value
+			id: value
 		])
 		return Self.init(descriptor: descriptor, size: pointSize)!
 	}
 
+	/// Returns a new font with the applied axex, using the identifier as key.
 	func withAxes(_ axes: [UInt32 : CGFloat]) -> Self {
 		let descriptor = Self.descriptorFor(name: fontName, axes: axes)
 		return Self.init(descriptor: descriptor, size: pointSize)!
 	}
 
+	/// Returns a new font with the applied axex, using the name as key.
 	func withAxes(_ axes: [String : CGFloat]) -> Self {
 		let axes: [UInt32 : CGFloat] = Dictionary(uniqueKeysWithValues: axes.map { key, value in
 			return (nameToId(key), value)
@@ -82,6 +106,16 @@ import SwiftUI
 
 // MARK: - SwiftUI Font extension
 public extension Font {
+	/// Create a custom font with the given name,size that scales with the body text style and variable font axes.
+	///
+	/// ```swift
+	///	Text("Hello world")
+	///		.font(.custom(
+	///			name: "Amstelvar",
+	///			size: 20,
+	///			axes: ["opsz": 100]
+	///		))
+	/// ```
 	static func custom(name: String, size: CGFloat, axes: [String : CGFloat]) -> Font {
 		guard let font = PlatformFont(name: name, size: size, axes: axes) else {
 			return .system(size: size)
