@@ -72,7 +72,11 @@ public extension PlatformFont {
 		let descriptor = Self.descriptorFor(name: fontName, axes: [
 			id: value
 		])
+		#if os(macOS)
 		return Self.init(descriptor: descriptor, size: pointSize)!
+		#else
+		return Self.init(descriptor: descriptor, size: pointSize)
+		#endif
 	}
 
 	/// Returns a new font with the applied axis, using the name as key.
@@ -81,13 +85,21 @@ public extension PlatformFont {
 		let descriptor = Self.descriptorFor(name: fontName, axes: [
 			id: value
 		])
+		#if os(macOS)
 		return Self.init(descriptor: descriptor, size: pointSize)!
+		#else
+		return Self.init(descriptor: descriptor, size: pointSize)
+		#endif
 	}
 
 	/// Returns a new font with the applied axex, using the identifier as key.
 	func withAxes(_ axes: [UInt32 : CGFloat]) -> Self {
 		let descriptor = Self.descriptorFor(name: fontName, axes: axes)
+		#if os(macOS)
 		return Self.init(descriptor: descriptor, size: pointSize)!
+		#else
+		return Self.init(descriptor: descriptor, size: pointSize)
+		#endif
 	}
 
 	/// Returns a new font with the applied axex, using the name as key.
@@ -96,7 +108,11 @@ public extension PlatformFont {
 			return (nameToId(key), value)
 		})
 		let descriptor = Self.descriptorFor(name: fontName, axes: axes)
+		#if os(macOS)
 		return Self.init(descriptor: descriptor, size: pointSize)!
+		#else
+		return Self.init(descriptor: descriptor, size: pointSize)
+		#endif
 	}
 }
 
