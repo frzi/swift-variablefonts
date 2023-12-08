@@ -6,10 +6,10 @@ import PackageDescription
 let package = Package(
 	name: "VariableFonts",
 	platforms: [
-		.macOS(.v11),
+		.macOS(.v10_15),
 		.iOS(.v13),
-		.tvOS(.v12),
-		.watchOS(.v4),
+		.tvOS(.v13),
+		.watchOS(.v6),
 		.macCatalyst(.v13),
 		.visionOS(.v1)
 	],
