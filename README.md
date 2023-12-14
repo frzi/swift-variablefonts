@@ -13,7 +13,7 @@ Extends AppKit's `NSFont`, UIKit's `UIFont` and SwiftUI's `Font` with variable f
 ## How-to-use
 ### Initializing font with axes.
 ```swift
-let font = NSFont(name: "Amstelvar", size: 20, aces: [
+let font = NSFont(name: "Amstelvar", size: 20, axes: [
 	"wght": 650,
 	"opsz": 100,
 	"XTRA": 700,
