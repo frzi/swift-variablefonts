@@ -20,7 +20,7 @@ let font = NSFont(name: "Amstelvar", size: 20, axes: [
 ])
 ```
 
-### New font with axes applied
+### New font with a single axis applied
 ```swift
 let scienceGothic = UIFont(name: "ScienceGothic", size: 20)!
 let slanted = scienceGothic.withAxis("slnt", value: -10)
