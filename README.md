@@ -15,8 +15,8 @@ Extends AppKit's `NSFont`, UIKit's `UIFont` and SwiftUI's `Font` with variable f
 ```swift
 let font = NSFont(name: "Amstelvar", size: 20, axes: [
 	.weight: 650,
-	.opticalSize: 100,
-	"XTRA": 700,
+	.opticalSize: 144,
+	"GRAD": 500,
 ])
 ```
 
@@ -34,7 +34,7 @@ print(axes)
 /*
 [VariableFonts.FontAxis(
 	id: 1481789268,
-	name: FontAxis.Name.custom("XROT"),
+	name: "XROT",
 	description: "Rotation in X",
 	minimumValue: -45.0,
 	maximumValue: 45.0,

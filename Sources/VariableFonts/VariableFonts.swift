@@ -33,7 +33,7 @@ public extension PlatformFont {
 	///	let axes: [UInt32 : CGFloat] = [
 	///		2003072104: 400, // Weight
 	///		2003072104: 200, // Width
-	///		1380930649: 45, // Custom Y rotation axis (ROTY)
+	///		1498566484: 45, // Custom Y rotation axis (YROT)
 	///	]
 	/// ```
 	convenience init?(name: String, size: CGFloat, axes: [UInt32 : CGFloat]) {
@@ -48,7 +48,7 @@ public extension PlatformFont {
 	///	let axes: [FontAxis.Name : CGFloat] = [
 	///		.weight: 400, // Weight
 	///		.width: 200, // Width
-	///		"ROTY": 45, // Custom Y rotation axis
+	///		"YROT": 45, // Custom Y rotation axis
 	///	]
 	/// ```
 	convenience init?(name: String, size: CGFloat, axes: [FontAxis.Name : CGFloat]) {
