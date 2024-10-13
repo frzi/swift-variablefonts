@@ -49,7 +49,7 @@ public extension PlatformFont {
 	///		"wdth": 200, // Width
 	///	]
 	/// ```
-	convenience init?(name: String, size: CGFloat, axes: [String : CGFloat]) {
+	convenience init?(name: String, size: CGFloat, axes: [FontAxis.Name : CGFloat]) {
 		let axes = Dictionary(uniqueKeysWithValues: axes.map { key, value in
 			return (nameToId(key), value)
 		})
@@ -80,7 +80,7 @@ public extension PlatformFont {
 	}
 
 	/// Returns a new font with the applied axis, using the name as key.
-	func withAxis(_ name: String, value: CGFloat) -> Self {
+	func withAxis(_ name: FontAxis.Name, value: CGFloat) -> Self {
 		let id = nameToId(name)
 		let descriptor = Self.descriptorFor(name: fontName, axes: [
 			id: value
@@ -103,7 +103,7 @@ public extension PlatformFont {
 	}
 
 	/// Returns a new font with the applied axex, using the name as key.
-	func withAxes(_ axes: [String : CGFloat]) -> Self {
+	func withAxes(_ axes: [FontAxis.Name : CGFloat]) -> Self {
 		let axes: [UInt32 : CGFloat] = Dictionary(uniqueKeysWithValues: axes.map { key, value in
 			return (nameToId(key), value)
 		})
@@ -132,7 +132,7 @@ public extension Font {
 	///			axes: ["opsz": 100]
 	///		))
 	/// ```
-	static func custom(name: String, size: CGFloat, axes: [String : CGFloat]) -> Font {
+	static func custom(name: String, size: CGFloat, axes: [FontAxis.Name : CGFloat]) -> Font {
 		guard let font = PlatformFont(name: name, size: size, axes: axes) else {
 			return .system(size: size)
 		}

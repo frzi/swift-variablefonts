@@ -14,8 +14,8 @@ Extends AppKit's `NSFont`, UIKit's `UIFont` and SwiftUI's `Font` with variable f
 ### Initializing font with axes.
 ```swift
 let font = NSFont(name: "Amstelvar", size: 20, axes: [
-	"wght": 650,
-	"opsz": 100,
+	.weight: 650,
+	.opticalSize: 100,
 	"XTRA": 700,
 ])
 ```
@@ -23,7 +23,7 @@ let font = NSFont(name: "Amstelvar", size: 20, axes: [
 ### New font with a single axis applied
 ```swift
 let scienceGothic = UIFont(name: "ScienceGothic", size: 20)!
-let slanted = scienceGothic.withAxis("slnt", value: -10)
+let slanted = scienceGothic.withAxis(.slant, value: -10)
 ```
 
 ### Get all available axes of a font
@@ -34,7 +34,7 @@ print(axes)
 /*
 [VariableFonts.FontAxis(
 	id: 1481789268,
-	name: "XROT",
+	name: FontAxis.Name.custom("XROT"),
 	description: "Rotation in X",
 	minimumValue: -45.0,
 	maximumValue: 45.0,
@@ -47,7 +47,7 @@ etc...]
 ```swift
 Text("Hello world")
 	.font(.custom(name: "Fraunces", size: 40, axes: [
-		"wght": 900,
+		.weight: 900,
 		"SOFT": 100,
 		"WONK": 1,
 	]))
@@ -65,3 +65,6 @@ let megaNunito = nunito.withAxes(
 	})
 )
 ```
+
+## Axis names
+The dictionary you supply to configure the axes use [`FontAxis.Name`](Sources/VariableFonts/FontAxis.swift#L38) as keys. This type comes with a set of well known axis names. I.e. `.weight` (`wght`), `.width` (`wdth`), etc. This type is `ExpressibleByStringLiteral`. String literals can be used for custom axis names.
