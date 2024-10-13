@@ -33,6 +33,7 @@ public extension PlatformFont {
 	///	let axes: [UInt32 : CGFloat] = [
 	///		2003072104: 400, // Weight
 	///		2003072104: 200, // Width
+	///		1380930649: 45, // Custom Y rotation axis (ROTY)
 	///	]
 	/// ```
 	convenience init?(name: String, size: CGFloat, axes: [UInt32 : CGFloat]) {
@@ -42,11 +43,12 @@ public extension PlatformFont {
 
 	/// Initialize a font with the given axes using names.
 	///
-	/// This initializer expects a dictionary with axis names (`String`) as key.
+	/// This initializer expects a dictionary with axis names (`FontAxis.Name`) as key.
 	/// ```swift
-	///	let axes: [String : CGFloat] = [
-	///		"wght": 400, // Weight
-	///		"wdth": 200, // Width
+	///	let axes: [FontAxis.Name : CGFloat] = [
+	///		.weight: 400, // Weight
+	///		.width: 200, // Width
+	///		"ROTY": 45, // Custom Y rotation axis
 	///	]
 	/// ```
 	convenience init?(name: String, size: CGFloat, axes: [FontAxis.Name : CGFloat]) {
@@ -129,7 +131,10 @@ public extension Font {
 	///		.font(.custom(
 	///			name: "Amstelvar",
 	///			size: 20,
-	///			axes: ["opsz": 100]
+	///			axes: [
+	///				.opticalSize: 144,
+	///				"GRAD": 500,
+	///			]
 	///		))
 	/// ```
 	static func custom(name: String, size: CGFloat, axes: [FontAxis.Name : CGFloat]) -> Font {
