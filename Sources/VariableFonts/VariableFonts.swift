@@ -33,6 +33,7 @@ public extension PlatformFont {
 	///	let axes: [UInt32 : CGFloat] = [
 	///		2003072104: 400, // Weight
 	///		2003072104: 200, // Width
+	///		1498566484: 45, // Custom Y rotation axis (YROT)
 	///	]
 	/// ```
 	convenience init?(name: String, size: CGFloat, axes: [UInt32 : CGFloat]) {
@@ -42,14 +43,15 @@ public extension PlatformFont {
 
 	/// Initialize a font with the given axes using names.
 	///
-	/// This initializer expects a dictionary with axis names (`String`) as key.
+	/// This initializer expects a dictionary with axis names (`FontAxis.Name`) as key.
 	/// ```swift
-	///	let axes: [String : CGFloat] = [
-	///		"wght": 400, // Weight
-	///		"wdth": 200, // Width
+	///	let axes: [FontAxis.Name : CGFloat] = [
+	///		.weight: 400, // Weight
+	///		.width: 200, // Width
+	///		"YROT": 45, // Custom Y rotation axis
 	///	]
 	/// ```
-	convenience init?(name: String, size: CGFloat, axes: [String : CGFloat]) {
+	convenience init?(name: String, size: CGFloat, axes: [FontAxis.Name : CGFloat]) {
 		let axes = Dictionary(uniqueKeysWithValues: axes.map { key, value in
 			return (nameToId(key), value)
 		})
@@ -80,7 +82,7 @@ public extension PlatformFont {
 	}
 
 	/// Returns a new font with the applied axis, using the name as key.
-	func withAxis(_ name: String, value: CGFloat) -> Self {
+	func withAxis(_ name: FontAxis.Name, value: CGFloat) -> Self {
 		let id = nameToId(name)
 		let descriptor = Self.descriptorFor(name: fontName, axes: [
 			id: value
@@ -103,7 +105,7 @@ public extension PlatformFont {
 	}
 
 	/// Returns a new font with the applied axex, using the name as key.
-	func withAxes(_ axes: [String : CGFloat]) -> Self {
+	func withAxes(_ axes: [FontAxis.Name : CGFloat]) -> Self {
 		let axes: [UInt32 : CGFloat] = Dictionary(uniqueKeysWithValues: axes.map { key, value in
 			return (nameToId(key), value)
 		})
@@ -129,10 +131,13 @@ public extension Font {
 	///		.font(.custom(
 	///			name: "Amstelvar",
 	///			size: 20,
-	///			axes: ["opsz": 100]
+	///			axes: [
+	///				.opticalSize: 144,
+	///				"GRAD": 500,
+	///			]
 	///		))
 	/// ```
-	static func custom(name: String, size: CGFloat, axes: [String : CGFloat]) -> Font {
+	static func custom(name: String, size: CGFloat, axes: [FontAxis.Name : CGFloat]) -> Font {
 		guard let font = PlatformFont(name: name, size: size, axes: axes) else {
 			return .system(size: size)
 		}

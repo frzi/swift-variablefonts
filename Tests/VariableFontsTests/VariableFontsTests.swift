@@ -29,4 +29,21 @@ final class VariableFontsTests: XCTestCase {
 			XCTAssertEqual(idToName(id), name, "ID \(id) does NOT match name \(name).")
 		}
 	}
+
+	func testEquality() throws {
+		let values: [FontAxis.Name : String] = [
+			.italic: "ital",
+			.slant: "slnt",
+			.opticalSize: "opsz",
+			.weight: "wght",
+			.width: "wdth",
+			.custom("wdth"): "wdth",
+			.custom("XTRA"): "XTRA",
+			"ROTY": "ROTY",
+		]
+
+		for (name, rawName) in values {
+			XCTAssertEqual(name.description, FontAxis.Name(rawValue: rawName).description)
+		}
+	}
 }
